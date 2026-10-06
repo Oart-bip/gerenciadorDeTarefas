@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ESTADO COMPARTILHADO: ChangeNotifier que guarda a lista de tarefas
+
 class TaskProvider extends ChangeNotifier {
   final List<Map<String, dynamic>> _tarefas = [
     {'titulo': 'Estudar Flutter', 'feita': false},
@@ -32,7 +32,7 @@ class TaskProvider extends ChangeNotifier {
 
 void main() {
   runApp(
-    // ChangeNotifierProvider acima do MaterialApp: as duas páginas acessam o mesmo estado
+
     ChangeNotifierProvider(
       create: (_) => TaskProvider(),
       child: const MaterialApp(home: Home()),
@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
           TextButton(
             onPressed: () {
               if (controller.text.trim().isNotEmpty) {
-                // context.read: executa a ação (não reconstrói o widget)
+              
                 context.read<TaskProvider>().adicionar(controller.text.trim());
               }
               Navigator.pop(context);
@@ -102,13 +102,12 @@ class _HomeState extends State<Home> {
   }
 }
 
-// PÁGINA 1: lê e altera o estado
 class PaginaTarefas extends StatelessWidget {
   const PaginaTarefas({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // context.watch: reconstrói a tela quando o Provider chama notifyListeners()
+
     final provider = context.watch<TaskProvider>();
 
     if (provider.tarefas.isEmpty) {
@@ -140,13 +139,13 @@ class PaginaTarefas extends StatelessWidget {
   }
 }
 
-// PÁGINA 2: só lê o estado; atualiza sozinha
+
 class PaginaResumo extends StatelessWidget {
   const PaginaResumo({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Consumer reconstrói automaticamente quando o estado muda
+    
     return Consumer<TaskProvider>(
       builder: (context, p, _) => Center(
         child: Column(
